@@ -142,76 +142,76 @@
       ],
       "parameters": [
         {
-          "description": "3д-объект 1",
+          "description": "3D object 1",
           "name": "O1",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh1",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "3д-объект 2",
+          "description": "3D object 2",
           "name": "O2",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh2",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "X точки соединения относительно центра тяжести первого объекта",
+          "description": "X of the connection point relative to the center of mass of the first object",
           "name": "X1",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести первого объекта",
+          "description": "Y of the connection point relative to the center of mass of the first object",
           "name": "Y1",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести первого объекта",
+          "description": "Z coordinate of the connection point relative to the center of mass of the first object",
           "name": "Z1",
           "type": "expression"
         },
         {
-          "description": "X точки соединения относительно центра тяжести второго объекта",
+          "description": "X of the connection point relative to the center of mass of the second object",
           "name": "X2",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести второго объекта",
+          "description": "Y of the connection point relative to the center of mass of the second object",
           "name": "Y2",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести второго объекта",
+          "description": "Z of the connection point relative to the center of mass of the second object",
           "name": "Z2",
           "type": "expression"
         },
         {
-          "description": "Оси вращения (X, XY и т. п.)",
+          "description": "Rotation axes (X, XY, etc.)",
           "name": "HingeAx",
           "supplementaryInformation": "[]",
           "type": "string"
         },
         {
-          "description": "Оси вращения (X, XY и т. п.) второго объекта",
+          "description": "Rotation axes (X, XY, etc.) of the second object",
           "name": "HingeAx2",
           "supplementaryInformation": "[]",
           "type": "string"
         },
         {
-          "description": "Ось нормали (перпендикуляр к вращению)",
+          "description": "Normal axis (perpendicular to rotation)",
           "name": "NormAx",
           "type": "string"
         },
         {
-          "description": "Ось нормали (перпендикуляр к вращению) второго объекта",
+          "description": "Normal axis (perpendicular to rotation) of the second object",
           "name": "NormAx2",
           "type": "string"
         }
@@ -237,7 +237,7 @@
             "let y2 = 0.01 * eventsFunctionContext.getArgument(\"Y2\");",
             "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
             "let hax = eventsFunctionContext.getArgument(\"HingeAx\");",
-            "let hax2 = eventsFunctionContext.getArgument(\"HingeAx\");",
+            "let hax2 = eventsFunctionContext.getArgument(\"HingeAx2\");",
             "let coneAng = eventsFunctionContext.getArgument(\"ConeAng\");",
             "let hingeAxis = new Jolt.Vec3(0, 0, 0);  ",
             "let hingeAxis2 = new Jolt.Vec3(0, 0, 0);  ",
@@ -319,71 +319,71 @@
       ],
       "parameters": [
         {
-          "description": "3д-объект 1",
+          "description": "3D object 1",
           "name": "O1",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh1",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "3д-объект 2",
+          "description": "3D object 2",
           "name": "O2",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh2",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "X точки соединения относительно центра тяжести первого объекта",
+          "description": "X of the connection point relative to the center of mass of the first object",
           "name": "X1",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести первого объекта",
+          "description": "Y of the connection point relative to the center of mass of the first object",
           "name": "Y1",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести первого объекта",
+          "description": "Z of the connection point relative to the center of mass of the first object",
           "name": "Z1",
           "type": "expression"
         },
         {
-          "description": "X точки соединения относительно центра тяжести второго объекта",
+          "description": "X of the connection point relative to the center of mass of the second object",
           "name": "X2",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести второго объекта",
+          "description": "Y of the connection point relative to the center of mass of the second object",
           "name": "Y2",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести второго объекта",
+          "description": "Z of the connection point relative to the center of mass of the second object",
           "name": "Z2",
           "type": "expression"
         },
         {
-          "description": "Оси вращения (X, XY и т. п.)",
+          "description": "Rotation axes (X, XY, etc.)",
           "name": "HingeAx",
           "supplementaryInformation": "[]",
           "type": "string"
         },
         {
-          "description": "Оси вращения (X, XY и т. п.) второго объекта",
+          "description": "Rotation axes (X, XY, etc.) of the second object",
           "name": "HingeAx2",
           "supplementaryInformation": "[]",
           "type": "string"
         },
         {
-          "description": "Максимальный угол",
+          "description": "Maximum angle",
           "name": "ConeAng",
           "type": "expression"
         }
@@ -474,54 +474,54 @@
       ],
       "parameters": [
         {
-          "description": "3д-объект 1",
+          "description": "3D object 1",
           "name": "O1",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh1",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "3д-объект 2",
+          "description": "3D object 2",
           "name": "O2",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh2",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "X точки соединения относительно центра тяжести первого объекта",
+          "description": "X of the connection point relative to the center of mass of the first object",
           "name": "X1",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести первого объекта",
+          "description": "Y of the connection point relative to the center of mass of the first object",
           "name": "Y1",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести первого объекта",
+          "description": "Z of the connection point relative to the center of mass of the first object",
           "name": "Z1",
           "type": "expression"
         },
         {
-          "description": "X точки соединения относительно центра тяжести второго объекта",
+          "description": "X of the connection point relative to the center of mass of the second object",
           "name": "X2",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести второго объекта",
+          "description": "Y of the connection point relative to the center of mass of the second object",
           "name": "Y2",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести второго объекта",
+          "description": "Z of the connection point relative to the center of mass of the second object",
           "name": "Z2",
           "type": "expression"
         }
@@ -599,54 +599,54 @@
       ],
       "parameters": [
         {
-          "description": "3д-объект 1",
+          "description": "3D object 1",
           "name": "O1",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh1",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "3д-объект 2",
+          "description": "3D object 2",
           "name": "O2",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh2",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "X точки соединения относительно центра тяжести первого объекта",
+          "description": "X of the connection point relative to the center of mass of the first object",
           "name": "X1",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести первого объекта",
+          "description": "Y of the connection point relative to the center of mass of the first object",
           "name": "Y1",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести первого объекта",
+          "description": "Z of the connection point relative to the center of mass of the first object",
           "name": "Z1",
           "type": "expression"
         },
         {
-          "description": "X точки соединения относительно центра тяжести второго объекта",
+          "description": "X of the connection point relative to the center of mass of the second object",
           "name": "X2",
           "type": "expression"
         },
         {
-          "description": "Y точки соединения относительно центра тяжести второго объекта",
+          "description": "Y of the connection point relative to the center of mass of the second object",
           "name": "Y2",
           "type": "expression"
         },
         {
-          "description": "Z точки соединения относительно центра тяжести второго объекта",
+          "description": "Z of the connection point relative to the center of mass of the second object",
           "name": "Z2",
           "type": "expression"
         }
@@ -716,23 +716,23 @@
       ],
       "parameters": [
         {
-          "description": "3д-объект 1",
+          "description": "3D object 1",
           "name": "O1",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh1",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "3д-объект 2",
+          "description": "3D object 2",
           "name": "O2",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh2",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
@@ -803,23 +803,23 @@
       ],
       "parameters": [
         {
-          "description": "3д-объект 1",
+          "description": "3D object 1",
           "name": "O1",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh1",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
         },
         {
-          "description": "3д-объект 2",
+          "description": "3D object 2",
           "name": "O2",
           "type": "objectList"
         },
         {
-          "description": "3д-физика",
+          "description": "3D physics",
           "name": "Beh2",
           "supplementaryInformation": "Physics3D::Physics3DBehavior",
           "type": "behavior"
