@@ -238,7 +238,7 @@
             "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
             "let hax = eventsFunctionContext.getArgument(\"HingeAx\");",
             "let hax2 = eventsFunctionContext.getArgument(\"HingeAx2\");",
-            "let coneAng = eventsFunctionContext.getArgument(\"ConeAng\");",
+            "let coneAng = THREE.MathUtils.DEG2RAD(eventsFunctionContext.getArgument(\"ConeAng\").valueOf());",
             "let hingeAxis = new Jolt.Vec3(0, 0, 0);  ",
             "let hingeAxis2 = new Jolt.Vec3(0, 0, 0);  ",
             "",
