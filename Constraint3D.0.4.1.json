@@ -1,0 +1,1426 @@
+{
+  "author": "",
+  "category": "Game mechanic",
+  "extensionNamespace": "",
+  "fullName": "Constraint 3D",
+  "gdevelopVersion": "",
+  "helpPath": "",
+  "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0ibWRpLXN0aWNrZXItY2lyY2xlLW91dGxpbmUiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIuMTIsMTguNDZMMTguMywxMi4yOEMxNi45NCwxMi41OSAxNS4zMSwxMy4yIDE0LjA3LDE0LjQ2QzEzLjA0LDE1LjUgMTIuMzksMTYuODMgMTIuMTIsMTguNDZNMjAuNzUsMTBIMjEuMDVDMjEuNDQsMTAgMjEuNzksMTAuMjcgMjEuOTMsMTAuNjRDMjIuMDcsMTEgMjIsMTEuNDMgMjEuNywxMS43MUwxMS43LDIxLjcxQzExLjUsMjEuOSAxMS4yNiwyMiAxMSwyMkwxMC42NCwyMS45M0MxMC4yNywyMS43OSAxMCwyMS40NCAxMCwyMS4wNUM5Ljg0LDE3LjY2IDEwLjczLDE0Ljk2IDEyLjY2LDEzLjAzQzE1LjUsMTAuMiAxOS42MiwxMCAyMC43NSwxME0xMiwyQzE2LjUsMiAyMC4zNCw1IDIxLjU4LDkuMTFMMjAsOUgxOS40MkMxOC4yNCw2LjA3IDE1LjM2LDQgMTIsNEE4LDggMCAwLDAgNCwxMkM0LDE1LjM2IDYuMDcsMTguMjQgOSwxOS40MkM4Ljk3LDIwLjEzIDksMjAuODUgOS4xMSwyMS41N0M1LDIwLjMzIDIsMTYuNSAyLDEyQzIsNi40NyA2LjUsMiAxMiwyWiIgLz48L3N2Zz4=",
+  "name": "Constraint3D",
+  "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/906574ba41a27257d5951c7e52113f603f56f6db99438dff56bffb6b2bdb957c_sticker-circle-outline.svg",
+  "shortDescription": "Extension for creating constraints between 3D physical objects.",
+  "version": "0.4.1",
+  "description": "",
+  "tags": [
+    "3d",
+    "physics"
+  ],
+  "authorIds": [
+    "iCuOTzgvSYOOXr4HW0sFJLIaP082"
+  ],
+  "dependencies": [],
+  "globalVariables": [],
+  "sceneVariables": [
+    {
+      "name": "VehicleConstraintSettings",
+      "type": "array",
+      "children": []
+    }
+  ],
+  "eventsFunctions": [
+    {
+      "description": "Create a hinge constraint between two 3D objects.",
+      "fullName": "Create hinge constraint",
+      "functionType": "Action",
+      "name": "Create",
+      "sentence": "Create a hinge constraint between _PARAM1_ and _PARAM3_ with the connection point at _PARAM5_; _PARAM6_; _PARAM7_ relative to _PARAM1_ and at _PARAM8_; _PARAM9_; _PARAM10_ relative to _PARAM3_, with rotation axes: _PARAM11_ and _PARAM12_ and normal axes: _PARAM13_ and _PARAM14_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "let ob2 = eventsFunctionContext.getObjects(\"O2\");",
+            "let x1 = 0.01 * eventsFunctionContext.getArgument(\"X1\");",
+            "let y1 = 0.01 * eventsFunctionContext.getArgument(\"Y1\");",
+            "let z1 = 0.01 * eventsFunctionContext.getArgument(\"Z1\");",
+            "let x2 = 0.01 * eventsFunctionContext.getArgument(\"X2\");",
+            "let y2 = 0.01 * eventsFunctionContext.getArgument(\"Y2\");",
+            "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
+            "let hax = eventsFunctionContext.getArgument(\"HingeAx\");",
+            "let nax = eventsFunctionContext.getArgument(\"NormAx\");",
+            "let hax2 = eventsFunctionContext.getArgument(\"HingeAx2\");",
+            "let nax2 = eventsFunctionContext.getArgument(\"NormAx2\");",
+            "/*let hingeAxis = new Jolt.Vec3(0, 0, 0);  ",
+            "let normalAxis = new Jolt.Vec3(0,0,0);",
+            "let hingeAxis2 = new Jolt.Vec3(0, 0, 0);  ",
+            "let normalAxis2 = new Jolt.Vec3(0,0,0);*/",
+            "function parseXYZ(str) {",
+            "  const result = [0, 0, 0]; // [X, Y, Z]",
+            "  const regex = /(\\d*)([XYZ])/g; // Ищем \"число\" + \"X/Y/Z\"",
+            "  let match;",
+            "",
+            "  while ((match = regex.exec(str)) !== null) {",
+            "    const numberStr = match[1]; // Число перед X/Y/Z (может быть пустым)",
+            "    const letter = match[2];    // X, Y или Z",
+            "    const number = numberStr === \"\" ? 1 : parseInt(numberStr, 10); // Если числа нет, то 1",
+            "",
+            "    if (letter === \"X\") result[0] = number;",
+            "    else if (letter === \"Y\") result[1] = number;",
+            "    else if (letter === \"Z\") result[2] = number;",
+            "  }",
+            "",
+            "  return result;",
+            "}",
+            "function createVec3 (str){",
+            "    let vec = new Jolt.Vec3();",
+            "    let arr = parseXYZ(str);",
+            "    vec.SetX(arr[0]);",
+            "    vec.SetY(arr[1]);",
+            "    vec.SetZ(arr[2]);",
+            "    return vec;",
+            "}",
+            "let hingeAxis = createVec3(hax.toString());  ",
+            "let normalAxis = createVec3(nax.toString());",
+            "let hingeAxis2 = createVec3(hax2.toString());  ",
+            "let normalAxis2 = createVec3(nax2.toString());",
+            "",
+            "/*",
+            "if (hax.toString().includes(\"X\")){",
+            "    hingeAxis.SetX(1);",
+            "}",
+            "if (hax.toString().includes(\"Y\")){",
+            "    hingeAxis.SetY(1);",
+            "}",
+            "if (hax.toString().includes(\"Z\")){",
+            "    hingeAxis.SetZ(1);",
+            "}",
+            "if (nax.toString().includes(\"X\")){",
+            "    normalAxis.SetX(1);",
+            "}",
+            "if (nax.toString().includes(\"Y\")){",
+            "    normalAxis.SetY(1);",
+            "}",
+            "if (nax.toString().includes(\"Z\")){",
+            "    normalAxis.SetZ(1);",
+            "}",
+            "if (hax2.toString().includes(\"X\")){",
+            "    hingeAxis2.SetX(1);",
+            "}",
+            "if (hax2.toString().includes(\"Y\")){",
+            "    hingeAxis2.SetY(1);",
+            "}",
+            "if (hax2.toString().includes(\"Z\")){",
+            "    hingeAxis2.SetZ(1);",
+            "}",
+            "if (nax2.toString().includes(\"X\")){",
+            "    normalAxis2.SetX(1);",
+            "}",
+            "if (nax2.toString().includes(\"Y\")){",
+            "    normalAxis2.SetY(1);",
+            "}",
+            "if (nax2.toString().includes(\"Z\")){",
+            "    normalAxis2.SetZ(1);",
+            "}",
+            "*/",
+            "",
+            "",
+            "let pshd = runtimeScene.physics3DSharedData;",
+            "let int = pshd.physicsSystem.GetBodyInterface();",
+            "ob1.forEach((o1) => {",
+            "    if (!o1.getVariables().has(\"constraints\")) {",
+            "        o1.getVariables().add(\"constraints\");",
+            "    }",
+            "    if (!o1.getVariables().has(\"constraints2\")) {",
+            "        o1.getVariables().add(\"constraints2\");",
+            "    }",
+            "    ob2.forEach((o2) => {",
+            "        if (!o2.getVariables().has(\"constraints\")) {",
+            "            o2.getVariables().add(\"constraints\");",
+            "        }",
+            "        if (!o2.getVariables().has(\"constraints2\")) {",
+            "            o2.getVariables().add(\"constraints2\");",
+            "        }",
+            "        let constr = o1.getVariables().get(\"constraints\");",
+            "        let constr2 = o2.getVariables().get(\"constraints\");",
+            "        let b = true;",
+            "        for (let i = 0; i < constr._childrenArray.length;i++){",
+            "            if (constr._childrenArray[i] == o2){",
+            "                b = false;",
+            "            }",
+            "        }",
+            "        if (o1 != o2&&b) {",
+            "            let beh1 = o1.getBehavior(\"Physics3D\");",
+            "            let beh2 = o2.getBehavior(\"Physics3D\");",
+            "            const pivotPoint1 = new Jolt.Vec3(x1, y1, z1);",
+            "            const pivotPoint2 = new Jolt.Vec3(x2, y2, z2);",
+            "            const s = new Jolt.HingeConstraintSettings()",
+            "            s.mPoint1 = pivotPoint1;",
+            "            s.mPoint2 = pivotPoint2;",
+            "            s.mHingeAxis1 = hingeAxis;",
+            "            s.mHingeAxis2 = hingeAxis2;",
+            "            s.mNormalAxis1 = normalAxis;",
+            "            s.mNormalAxis2 = normalAxis2;",
+            "            s.mSpace = 0;",
+            "            const con = s.Create(beh1.getBody(), beh2.getBody());",
+            "            pshd.physicsSystem.AddConstraint(con);",
+            "            constr._childrenArray.push(o2);",
+            "            constr2._childrenArray.push(o1);",
+            "            o1.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "            o2.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "3D object 2",
+          "name": "O2",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh2",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the first object",
+          "name": "X1",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the first object",
+          "name": "Y1",
+          "type": "expression"
+        },
+        {
+          "description": "Z coordinate of the connection point relative to the center of mass of the first object",
+          "name": "Z1",
+          "type": "expression"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the second object",
+          "name": "X2",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the second object",
+          "name": "Y2",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the second object",
+          "name": "Z2",
+          "type": "expression"
+        },
+        {
+          "description": "Rotation axis (X, 1X3Y, etc.)",
+          "name": "HingeAx",
+          "supplementaryInformation": "[]",
+          "type": "string"
+        },
+        {
+          "description": "Rotation axis (X, 1X3Y, etc.) of the second object",
+          "name": "HingeAx2",
+          "supplementaryInformation": "[]",
+          "type": "string"
+        },
+        {
+          "description": "Normal axis (perpendicular to rotation)",
+          "name": "NormAx",
+          "type": "string"
+        },
+        {
+          "description": "Normal axis (perpendicular to rotation) of the second object",
+          "name": "NormAx2",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Create a cone constraint between two 3D objects.",
+      "fullName": "Create cone constraint",
+      "functionType": "Action",
+      "name": "CreateCone",
+      "sentence": "Create a cone constraint between _PARAM1_ and _PARAM3_ with the connection point at _PARAM5_; _PARAM6_; _PARAM7_ relative to _PARAM1_ and at _PARAM8_; _PARAM9_; _PARAM10_ relative to _PARAM3_, with rotation axes: _PARAM11_ and _PARAM12_ and maximum angle: _PARAM13_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "let ob2 = eventsFunctionContext.getObjects(\"O2\");",
+            "let x1 = 0.01 * eventsFunctionContext.getArgument(\"X1\");",
+            "let y1 = 0.01 * eventsFunctionContext.getArgument(\"Y1\");",
+            "let z1 = 0.01 * eventsFunctionContext.getArgument(\"Z1\");",
+            "let x2 = 0.01 * eventsFunctionContext.getArgument(\"X2\");",
+            "let y2 = 0.01 * eventsFunctionContext.getArgument(\"Y2\");",
+            "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
+            "let hax = eventsFunctionContext.getArgument(\"HingeAx\");",
+            "let hax2 = eventsFunctionContext.getArgument(\"HingeAx2\");",
+            "let coneAng = THREE.MathUtils.degToRad(eventsFunctionContext.getArgument(\"ConeAng\").valueOf());",
+            "//let hingeAxis = new Jolt.Vec3(0, 0, 0);  ",
+            "//let hingeAxis2 = new Jolt.Vec3(0, 0, 0); ",
+            "",
+            "function parseXYZ(str) {",
+            "  const result = [0, 0, 0]; // [X, Y, Z]",
+            "  const regex = /(\\d*)([XYZ])/g; // Ищем \"число\" + \"X/Y/Z\"",
+            "  let match;",
+            "",
+            "  while ((match = regex.exec(str)) !== null) {",
+            "    const numberStr = match[1]; // Число перед X/Y/Z (может быть пустым)",
+            "    const letter = match[2];    // X, Y или Z",
+            "    const number = numberStr === \"\" ? 1 : parseInt(numberStr, 10); // Если числа нет, то 1",
+            "",
+            "    if (letter === \"X\") result[0] = number;",
+            "    else if (letter === \"Y\") result[1] = number;",
+            "    else if (letter === \"Z\") result[2] = number;",
+            "  }",
+            "",
+            "  return result;",
+            "}",
+            "function createVec3 (str){",
+            "    let vec = new Jolt.Vec3();",
+            "    let arr = parseXYZ(str);",
+            "    vec.SetX(arr[0]);",
+            "    vec.SetY(arr[1]);",
+            "    vec.SetZ(arr[2]);",
+            "    return vec;",
+            "}",
+            "let hingeAxis = createVec3(hax.toString());  ",
+            "let hingeAxis2 = createVec3(hax2.toString());  ",
+            "",
+            "/*",
+            "if (hax.toString().includes(\"X\")){",
+            "    hingeAxis.SetX(1);",
+            "}",
+            "if (hax.toString().includes(\"Y\")){",
+            "    hingeAxis.SetY(1);",
+            "}",
+            "if (hax.toString().includes(\"Z\")){",
+            "    hingeAxis.SetZ(1);",
+            "}",
+            "",
+            "if (hax2.toString().includes(\"X\")){",
+            "    hingeAxis2.SetX(1);",
+            "}",
+            "if (hax2.toString().includes(\"Y\")){",
+            "    hingeAxis2.SetY(1);",
+            "}",
+            "if (hax2.toString().includes(\"Z\")){",
+            "    hingeAxis2.SetZ(1);",
+            "}",
+            "*/",
+            "",
+            "",
+            "let pshd = runtimeScene.physics3DSharedData;",
+            "let int = pshd.physicsSystem.GetBodyInterface();",
+            "ob1.forEach((o1) => {",
+            "    if (!o1.getVariables().has(\"constraints\")) {",
+            "        o1.getVariables().add(\"constraints\");",
+            "    }",
+            "    if (!o1.getVariables().has(\"constraints2\")) {",
+            "        o1.getVariables().add(\"constraints2\");",
+            "    }",
+            "    ob2.forEach((o2) => {",
+            "        if (!o2.getVariables().has(\"constraints\")) {",
+            "            o2.getVariables().add(\"constraints\");",
+            "        }",
+            "        if (!o2.getVariables().has(\"constraints2\")) {",
+            "            o2.getVariables().add(\"constraints2\");",
+            "        }",
+            "        let constr = o1.getVariables().get(\"constraints\");",
+            "        let constr2 = o2.getVariables().get(\"constraints\");",
+            "        let b = true;",
+            "        for (let i = 0; i < constr._childrenArray.length;i++){",
+            "            if (constr._childrenArray[i] == o2){",
+            "                b = false;",
+            "            }",
+            "        }",
+            "        if (o1 != o2&&b) {",
+            "            let beh1 = o1.getBehavior(\"Physics3D\");",
+            "            let beh2 = o2.getBehavior(\"Physics3D\");",
+            "            const pivotPoint1 = new Jolt.Vec3(x1, y1, z1);",
+            "            const pivotPoint2 = new Jolt.Vec3(x2, y2, z2);",
+            "            const s = new Jolt.ConeConstraintSettings();",
+            "            s.mPoint1 = pivotPoint1;",
+            "            s.mPoint2 = pivotPoint2;",
+            "            s.mTwistAxis1 = hingeAxis;",
+            "            s.mTwistAxis2 = hingeAxis2;",
+            "            s.mHalfConeAngle = coneAng/2;",
+            "            s.mSpace = 0;",
+            "            const con = s.Create(beh1.getBody(), beh2.getBody());",
+            "            pshd.physicsSystem.AddConstraint(con);",
+            "            constr._childrenArray.push(o2);",
+            "            constr2._childrenArray.push(o1);",
+            "            o1.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "            o2.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "3D object 2",
+          "name": "O2",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh2",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the first object",
+          "name": "X1",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the first object",
+          "name": "Y1",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the first object",
+          "name": "Z1",
+          "type": "expression"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the second object",
+          "name": "X2",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the second object",
+          "name": "Y2",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the second object",
+          "name": "Z2",
+          "type": "expression"
+        },
+        {
+          "description": "Rotation axes (X, XY, etc.)",
+          "name": "HingeAx",
+          "supplementaryInformation": "[]",
+          "type": "string"
+        },
+        {
+          "description": "Rotation axes (X, XY, etc.) of the second object",
+          "name": "HingeAx2",
+          "supplementaryInformation": "[]",
+          "type": "string"
+        },
+        {
+          "description": "Maximum angle",
+          "name": "ConeAng",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Create a point constraint between two 3D objects.",
+      "fullName": "Create point constraint",
+      "functionType": "Action",
+      "name": "CreatePoint",
+      "sentence": "Create a point constraint between _PARAM1_ and _PARAM3_ with the connection point at _PARAM5_; _PARAM6_; _PARAM7_ relative to _PARAM1_ and at _PARAM8_; _PARAM9_; _PARAM10_ relative to _PARAM3_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "let ob2 = eventsFunctionContext.getObjects(\"O2\");",
+            "let x1 = 0.01 * eventsFunctionContext.getArgument(\"X1\");",
+            "let y1 = 0.01 * eventsFunctionContext.getArgument(\"Y1\");",
+            "let z1 = 0.01 * eventsFunctionContext.getArgument(\"Z1\");",
+            "let x2 = 0.01 * eventsFunctionContext.getArgument(\"X2\");",
+            "let y2 = 0.01 * eventsFunctionContext.getArgument(\"Y2\");",
+            "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
+            "",
+            "",
+            "",
+            "let pshd = runtimeScene.physics3DSharedData;",
+            "let int = pshd.physicsSystem.GetBodyInterface();",
+            "ob1.forEach((o1) => {",
+            "    if (!o1.getVariables().has(\"constraints\")) {",
+            "        o1.getVariables().add(\"constraints\");",
+            "    }",
+            "    if (!o1.getVariables().has(\"constraints2\")) {",
+            "        o1.getVariables().add(\"constraints2\");",
+            "    }",
+            "    ob2.forEach((o2) => {",
+            "        if (!o2.getVariables().has(\"constraints\")) {",
+            "            o2.getVariables().add(\"constraints\");",
+            "        }",
+            "        if (!o2.getVariables().has(\"constraints2\")) {",
+            "            o2.getVariables().add(\"constraints2\");",
+            "        }",
+            "        let constr = o1.getVariables().get(\"constraints\");",
+            "        let constr2 = o2.getVariables().get(\"constraints\");",
+            "        let b = true;",
+            "        for (let i = 0; i < constr._childrenArray.length;i++){",
+            "            if (constr._childrenArray[i] == o2){",
+            "                b = false;",
+            "            }",
+            "        }",
+            "        if (o1 != o2&&b) {",
+            "            let beh1 = o1.getBehavior(\"Physics3D\");",
+            "            let beh2 = o2.getBehavior(\"Physics3D\");",
+            "            const pivotPoint1 = new Jolt.Vec3(x1, y1, z1);",
+            "            const pivotPoint2 = new Jolt.Vec3(x2, y2, z2);",
+            "            const s = new Jolt.PointConstraintSettings()",
+            "            s.mPoint1 = pivotPoint1;",
+            "            s.mPoint2 = pivotPoint2;",
+            "            s.mSpace = 0;",
+            "            ",
+            "            /*",
+            "            s.mPoint1 = pivotPoint1;",
+            "            s.mPoint2 = pivotPoint2;",
+            "            s.mHingeAxis1 = hingeAxis;",
+            "            s.mHingeAxis2 = hingeAxis;",
+            "            s.mNormalAxis1 = normalAxis;",
+            "            s.mNormalAxis2 = normalAxis;",
+            "            s.mLimitsSpringSettings.mMode = 1;",
+            "            s.mLimitsSpringSettings.mDamping = 0.1;",
+            "            s.set_mLimitsMax(THREE.MathUtils.degToRad(179));",
+            "            s.set_mLimitsMin(THREE.MathUtils.degToRad(-179));",
+            "            */",
+            "            const con = s.Create(beh1.getBody(), beh2.getBody());",
+            "            pshd.physicsSystem.AddConstraint(con);",
+            "            constr._childrenArray.push(o2);",
+            "            constr2._childrenArray.push(o1);",
+            "            o1.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "            o2.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "3D object 2",
+          "name": "O2",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh2",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the first object",
+          "name": "X1",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the first object",
+          "name": "Y1",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the first object",
+          "name": "Z1",
+          "type": "expression"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the second object",
+          "name": "X2",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the second object",
+          "name": "Y2",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the second object",
+          "name": "Z2",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Create a fixed constraint between two 3D objects.",
+      "fullName": "Create fixed constraint",
+      "functionType": "Action",
+      "name": "CreateFixed",
+      "sentence": "Create a fixed constraint between _PARAM1_ and _PARAM3_ with the connection point at _PARAM5_; _PARAM6_; _PARAM7_ relative to _PARAM1_ and at _PARAM8_; _PARAM9_; _PARAM10_ relative to _PARAM3_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "let ob2 = eventsFunctionContext.getObjects(\"O2\");",
+            "let x1 = 0.01 * eventsFunctionContext.getArgument(\"X1\");",
+            "let y1 = 0.01 * eventsFunctionContext.getArgument(\"Y1\");",
+            "let z1 = 0.01 * eventsFunctionContext.getArgument(\"Z1\");",
+            "let x2 = 0.01 * eventsFunctionContext.getArgument(\"X2\");",
+            "let y2 = 0.01 * eventsFunctionContext.getArgument(\"Y2\");",
+            "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
+            "",
+            "",
+            "",
+            "let pshd = runtimeScene.physics3DSharedData;",
+            "let int = pshd.physicsSystem.GetBodyInterface();",
+            "ob1.forEach((o1) => {",
+            "    if (!o1.getVariables().has(\"constraints\")) {",
+            "        o1.getVariables().add(\"constraints\");",
+            "    }",
+            "    if (!o1.getVariables().has(\"constraints2\")) {",
+            "        o1.getVariables().add(\"constraints2\");",
+            "    }",
+            "    ob2.forEach((o2) => {",
+            "        if (!o2.getVariables().has(\"constraints\")) {",
+            "            o2.getVariables().add(\"constraints\");",
+            "        }",
+            "        if (!o2.getVariables().has(\"constraints2\")) {",
+            "            o2.getVariables().add(\"constraints2\");",
+            "        }",
+            "        let constr = o1.getVariables().get(\"constraints\");",
+            "        let constr2 = o2.getVariables().get(\"constraints\");",
+            "        let b = true;",
+            "        for (let i = 0; i < constr._childrenArray.length;i++){",
+            "            if (constr._childrenArray[i] == o2){",
+            "                b = false;",
+            "            }",
+            "        }",
+            "        if (o1 != o2&&b) {",
+            "            let beh1 = o1.getBehavior(\"Physics3D\");",
+            "            let beh2 = o2.getBehavior(\"Physics3D\");",
+            "            const pivotPoint1 = new Jolt.Vec3(x1, y1, z1);",
+            "            const pivotPoint2 = new Jolt.Vec3(x2, y2, z2);",
+            "            const s = new Jolt.FixedConstraintSettings(); ",
+            "            s.mPoint1 = pivotPoint1;",
+            "            s.mPoint2 = pivotPoint2;",
+            "            s.mSpace = 0;",
+            "            const con = s.Create(beh1.getBody(), beh2.getBody());",
+            "            pshd.physicsSystem.AddConstraint(con);",
+            "            constr._childrenArray.push(o2);",
+            "            constr2._childrenArray.push(o1);",
+            "            o1.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "            o2.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "3D object 2",
+          "name": "O2",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh2",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the first object",
+          "name": "X1",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the first object",
+          "name": "Y1",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the first object",
+          "name": "Z1",
+          "type": "expression"
+        },
+        {
+          "description": "X of the connection point relative to the center of mass of the second object",
+          "name": "X2",
+          "type": "expression"
+        },
+        {
+          "description": "Y of the connection point relative to the center of mass of the second object",
+          "name": "Y2",
+          "type": "expression"
+        },
+        {
+          "description": "Z of the connection point relative to the center of mass of the second object",
+          "name": "Z2",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Create a fixed constraint between two 3D objects and automatically determine the connection point.",
+      "fullName": "Create fixed constraint with automatic point",
+      "functionType": "Action",
+      "name": "AutoCreateFixed",
+      "sentence": "Automatically create a fixed constraint between _PARAM1_ and _PARAM3_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "let ob2 = eventsFunctionContext.getObjects(\"O2\");",
+            "",
+            "",
+            "",
+            "",
+            "let pshd = runtimeScene.physics3DSharedData;",
+            "let int = pshd.physicsSystem.GetBodyInterface();",
+            "ob1.forEach((o1) => {",
+            "    if (!o1.getVariables().has(\"constraints\")) {",
+            "        o1.getVariables().add(\"constraints\");",
+            "    }",
+            "    if (!o1.getVariables().has(\"constraints2\")) {",
+            "        o1.getVariables().add(\"constraints2\");",
+            "    }",
+            "    ob2.forEach((o2) => {",
+            "        if (!o2.getVariables().has(\"constraints\")) {",
+            "            o2.getVariables().add(\"constraints\");",
+            "        }",
+            "        if (!o2.getVariables().has(\"constraints2\")) {",
+            "            o2.getVariables().add(\"constraints2\");",
+            "        }",
+            "        let constr = o1.getVariables().get(\"constraints\");",
+            "        let constr2 = o2.getVariables().get(\"constraints\");",
+            "        let b = true;",
+            "        for (let i = 0; i < constr._childrenArray.length;i++){",
+            "            if (constr._childrenArray[i] == o2){",
+            "                b = false;",
+            "            }",
+            "        }",
+            "        if (o1 != o2&&b) {",
+            "            let beh1 = o1.getBehavior(\"Physics3D\");",
+            "            let beh2 = o2.getBehavior(\"Physics3D\");",
+            "            const s = new Jolt.FixedConstraintSettings();",
+            "            s.mSpace = 1;",
+            "            s.set_mAutoDetectPoint(true);",
+            "            const con = s.Create(beh1.getBody(), beh2.getBody());",
+            "            pshd.physicsSystem.AddConstraint(con);",
+            "            constr._childrenArray.push(o2);",
+            "            constr2._childrenArray.push(o1);",
+            "            o1.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "            o2.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "3D object 2",
+          "name": "O2",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh2",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Prepare 4-wheels vehicle constraint for creating.",
+      "fullName": "Prepare vehicle constraint ",
+      "functionType": "Action",
+      "name": "PrepareVehicle",
+      "private": true,
+      "sentence": "Prepare vehicle constraint with maximum pitch/roll angle: _PARAM1_, with forward direction: _PARAM2_, inverted: _PARAM3_; with up direction: _PARAM4_, inverted: _PARAM5_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const pra = THREE.MathUtils.degToRad(eventsFunctionContext.getArgument(\"PRA\").valueOf());",
+            "const fd = eventsFunctionContext.getArgument(\"FD\");",
+            "const ud = eventsFunctionContext.getArgument(\"UD\");",
+            "const ia1 = eventsFunctionContext.getArgument(\"IA1\").valueOf();",
+            "const ia2 = eventsFunctionContext.getArgument(\"IA2\").valueOf();",
+            "let d1 = 1;",
+            "let d2 = 1;",
+            "if (ia1==true){",
+            "    d1 = -1;",
+            "}",
+            "if (ia2==true){",
+            "    d2 = -1;",
+            "}",
+            "const fdv = new Jolt.Vec3(0,0,0);",
+            "const udv = new Jolt.Vec3(0,0,0);",
+            "if(fd.toString() == \"X\"){",
+            "    fdv.SetX(d1);",
+            "}",
+            "if(fd.toString() == \"Y\"){",
+            "    fdv.SetY(d1);",
+            "}",
+            "if(fd.toString() == \"Z\"){",
+            "    fdv.SetZ(d1);",
+            "}",
+            "if(ud.toString() == \"X\"){",
+            "    udv.SetX(d2);",
+            "}",
+            "if(ud.toString() == \"Y\"){",
+            "    udv.SetY(d2);",
+            "}",
+            "if(ud.toString() == \"Z\"){",
+            "    udv.SetZ(d2);",
+            "}",
+            "let vcs = new Jolt.VehicleConstraintSettings();",
+            "vcs.mMaxPitchRollAngle = pra;",
+            "vcs.mForward = fdv;",
+            "vcs.mUp = udv;",
+            "vcs.mWheels.clear();",
+            "let sett = runtimeScene.getVariablesForExtension(\"Constraint3D\").get(\"VehicleConstraintSettings\");",
+            "if (sett._childrenArray.length>0){",
+            "    sett._childrenArray.splice(0,sett._childrenArray.length);",
+            "}",
+            "sett._childrenArray.push(vcs);",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Maximum pitch/roll angle (set to 180 to turn off)",
+          "name": "PRA",
+          "type": "expression"
+        },
+        {
+          "description": "Forward direction (in local space)",
+          "name": "FD",
+          "supplementaryInformation": "[\"X\",\"Y\",\"Z\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Invert forward direction",
+          "name": "IA1",
+          "type": "trueorfalse"
+        },
+        {
+          "description": "Up direction (in local space)",
+          "name": "UD",
+          "supplementaryInformation": "[\"X\",\"Y\",\"Z\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Invert up direction",
+          "name": "IA2",
+          "type": "trueorfalse"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Add a wheel to vehicle constraint",
+      "fullName": "Add wheel",
+      "functionType": "Action",
+      "name": "AddWheel",
+      "private": true,
+      "sentence": "Add to vehicle constraint a wheel with: X: _PARAM1_, Y: _PARAM2_, Z: _PARAM3_, radius: _PARAM4_, width: _PARAM5_, steering axis: _PARAM6_ (inverted: _PARAM7_), up direction: _PARAM8_ (inverted: _PARAM9_), forward direction: _PARAM10_ (inverted: _PARAM11_), suspension max. and min. length: _PARAM12_ and _PARAM13_, suspension preload length: _PARAM14_, suspension direction: _PARAM15_ (inverted: _PARAM16_), max hand brake torque: _PARAM17_, max steer angle: _PARAM18_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "function getVec (dir, dd) {\r",
+            "    let vec = new Jolt.Vec3(0,0,0);\r",
+            "    if (dir == \"X\") vec.SetX(dd);\r",
+            "    if (dir == \"Y\") vec.SetY(dd);\r",
+            "    if (dir == \"Z\") vec.SetZ(dd);\r",
+            "    return vec;\r",
+            "}\r",
+            "const x = eventsFunctionContext.getArgument(\"X\").valueOf()*0.01;\r",
+            "const y = eventsFunctionContext.getArgument(\"Y\").valueOf()*0.01;\r",
+            "const z = eventsFunctionContext.getArgument(\"Z\").valueOf()*0.01;\r",
+            "const rad = eventsFunctionContext.getArgument(\"RAD\").valueOf()*0.01;\r",
+            "const width = eventsFunctionContext.getArgument(\"W\").valueOf()*0.01;\r",
+            "const stax = eventsFunctionContext.getArgument(\"STAX\").toString(); //const staxvec = new Jolt.Vec3(0,0,0);\r",
+            "const ia = eventsFunctionContext.getArgument(\"IA\").valueOf(); let d1 = 1; if(ia == true) d1 = -1;\r",
+            "const ud = eventsFunctionContext.getArgument(\"UD\").toString(); //const udvec = new Jolt.Vec3(0,0,0);\r",
+            "const ia2 = eventsFunctionContext.getArgument(\"IA2\").valueOf(); let d2 = 1; if(ia2 == true) d2 = -1;\r",
+            "const fd = eventsFunctionContext.getArgument(\"FD\").toString(); //const fdvec = new Jolt.Vec3(0,0,0);\r",
+            "const ia3 = eventsFunctionContext.getArgument(\"IA3\").valueOf(); let d3 = 1; if(ia3 == true) d3 = -1;\r",
+            "const smaxl = eventsFunctionContext.getArgument(\"SMAXL\").valueOf();\r",
+            "const sminl = eventsFunctionContext.getArgument(\"SMINL\").valueOf();\r",
+            "const spl = eventsFunctionContext.getArgument(\"SPL\").valueOf();\r",
+            "const sd = eventsFunctionContext.getArgument(\"SD\").toString(); //const sdvec = new Jolt.Vec3(0,0,0);\r",
+            "const ia4 = eventsFunctionContext.getArgument(\"IA4\").valueOf(); let d4 = 1; if(ia4 == true) d4 = -1;\r",
+            "const mhbt = eventsFunctionContext.getArgument(\"MHBT\").valueOf();\r",
+            "const msa = THREE.MathUtils.degToRad(eventsFunctionContext.getArgument(\"MSA\").valueOf());\r",
+            "\r",
+            "const staxvec = getVec(stax,d1);\r",
+            "const udvec = getVec(ud,d2);\r",
+            "const fdvec = getVec(fd,d3);\r",
+            "const sdvec = getVec(sd,d4);\r",
+            "const sett = new Jolt.WheelSettingsWV();\r",
+            "sett.mMaxHandBrakeTorque = mhbt;\r",
+            "sett.mMaxSteerAngle = msa;\r",
+            "sett.mPosition.SetX(x);\r",
+            "sett.mPosition.SetY(y);\r",
+            "sett.mPosition.SetZ(z);\r",
+            "sett.mRadius = rad;\r",
+            "sett.mWidth = width;\r",
+            "sett.mSteeringAxis = staxvec;\r",
+            "sett.mWheelUp = udvec;\r",
+            "sett.mWheelForward = fdvec;\r",
+            "sett.mSuspensionMaxLength = smaxl;\r",
+            "sett.mSuspensionMinLength = sminl;\r",
+            "sett.mSuspensionPreloadLength = spl;\r",
+            "const constr = runtimeScene.getVariablesForExtension(\"Constraint3D\").get(\"VehicleConstraintSettings\")._childrenArray[0];\r",
+            "constr.mWheels.push_back(sett);\r",
+            "//console.log((constr.mWheels.size()))"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Position on vehicle's local X",
+          "name": "X",
+          "type": "expression"
+        },
+        {
+          "description": "Position on vehicle's local Y",
+          "name": "Y",
+          "type": "expression"
+        },
+        {
+          "description": "Position on vehicle's local Z",
+          "name": "Z",
+          "type": "expression"
+        },
+        {
+          "description": "Radius",
+          "name": "RAD",
+          "type": "expression"
+        },
+        {
+          "description": "Width",
+          "name": "W",
+          "type": "expression"
+        },
+        {
+          "description": "Steering axis",
+          "name": "STAX",
+          "supplementaryInformation": "[\"X\",\"Y\",\"Z\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Invert steering direction",
+          "name": "IA",
+          "type": "trueorfalse"
+        },
+        {
+          "description": "Up direction (in local space)",
+          "name": "UD",
+          "supplementaryInformation": "[\"X\",\"Y\",\"Z\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Invert up direction",
+          "name": "IA2",
+          "type": "trueorfalse"
+        },
+        {
+          "description": "Forward direction (in local space)",
+          "name": "FD",
+          "supplementaryInformation": "[\"X\",\"Y\",\"Z\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Invert forward direction",
+          "name": "IA3",
+          "type": "trueorfalse"
+        },
+        {
+          "description": "Suspension max length ",
+          "name": "SMAXL",
+          "type": "expression"
+        },
+        {
+          "description": "Suspension min length ",
+          "name": "SMINL",
+          "type": "expression"
+        },
+        {
+          "description": "Suspension preload length ",
+          "name": "SPL",
+          "type": "expression"
+        },
+        {
+          "description": "Suspension direction (in local space). Should point down",
+          "name": "SD",
+          "supplementaryInformation": "[\"X\",\"Y\",\"Z\"]",
+          "type": "stringWithSelector"
+        },
+        {
+          "description": "Invert suspension direction",
+          "name": "IA4",
+          "type": "trueorfalse"
+        },
+        {
+          "description": "Max hand brake torque",
+          "name": "MHBT",
+          "type": "expression"
+        },
+        {
+          "description": "Max steer angle",
+          "name": "MSA",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Create a 4-wheels vehicle constraint for 3D object.",
+      "fullName": "Create vehicle constraint",
+      "functionType": "Action",
+      "name": "CreateVehicle",
+      "private": true,
+      "sentence": "Make _PARAM1_ a vehicle with: front left and right wheels: _PARAM3_, _PARAM4_; rear left and right wheels: _PARAM5_, _PARAM6_; max engine torque: _PARAM7_; clutch strength: _PARAM8_; limited slip ratio: _PARAM9_; anti roll bar enabled: _PARAM10_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "// Wheels",
+            "const FL_WHEEL = eventsFunctionContext.getArgument(\"FLW\").valueOf();",
+            "const FR_WHEEL = eventsFunctionContext.getArgument(\"FRW\").valueOf();",
+            "const BL_WHEEL = eventsFunctionContext.getArgument(\"BLW\").valueOf();",
+            "const BR_WHEEL = eventsFunctionContext.getArgument(\"BRW\").valueOf();",
+            "",
+            "const maxEngineTorque = eventsFunctionContext.getArgument(\"MET\").valueOf();",
+            "const clutchStrength = eventsFunctionContext.getArgument(\"CLS\").valueOf();",
+            "const leftRightLimitedSlipRatio = eventsFunctionContext.getArgument(\"LSR\").valueOf();",
+            "const antiRollBarEnabled = eventsFunctionContext.getArgument(\"ARBE\").valueOf();",
+            "",
+            "",
+            "const pshd = runtimeScene.physics3DSharedData;",
+            "const int = pshd.physicsSystem.GetBodyInterface();",
+            "ob1.forEach((o1) => {",
+            "    const beh = o1.getBehavior(\"Physics3D\");",
+            "    let carBody = beh.getBody();",
+            "    if (o1.getVariables().has(\"VehicleConstraint4\")) {",
+            "        pshd.physicsSystem.RemoveConstraint(o1.getVariables().get(\"VehicleConstraint4\")._childrenArray[0]);",
+            "        o1.getVariables().remove(\"VehicleConstraint4\");",
+            "    }",
+            "    ",
+            "    //let vehicle = new Jolt.VehicleConstraintSettings();",
+            "    let vehicle = runtimeScene.getVariablesForExtension(\"Constraint3D\").get(\"VehicleConstraintSettings\")._childrenArray[0];",
+            "    //",
+            "",
+            "    const controllerSettings = new Jolt.WheeledVehicleControllerSettings();",
+            "    controllerSettings.mEngine.mMaxTorque = maxEngineTorque;",
+            "    controllerSettings.mTransmission.mClutchStrength = clutchStrength;",
+            "",
+            "    // Front differential",
+            "    controllerSettings.mDifferentials.clear();",
+            "    const frontWheelDrive = new Jolt.VehicleDifferentialSettings();",
+            "    frontWheelDrive.mLeftWheel = FL_WHEEL;",
+            "    frontWheelDrive.mRightWheel = FR_WHEEL;",
+            "    frontWheelDrive.mLimitedSlipRatio = leftRightLimitedSlipRatio;",
+            "",
+            "    frontWheelDrive.mEngineTorqueRatio = 0.5; // Split engine torque when 4WD",
+            "    controllerSettings.mDifferentials.push_back(frontWheelDrive);",
+            "    controllerSettings.mDifferentialLimitedSlipRatio = leftRightLimitedSlipRatio//frontBackLimitedSlipRatio;",
+            "",
+            "    // Rear differential",
+            "    const rearWheelDrive = new Jolt.VehicleDifferentialSettings();",
+            "    rearWheelDrive.mLeftWheel = BL_WHEEL;",
+            "    rearWheelDrive.mRightWheel = BR_WHEEL;",
+            "    rearWheelDrive.mLimitedSlipRatio = leftRightLimitedSlipRatio;",
+            "    rearWheelDrive.mEngineTorqueRatio = 0.5;",
+            "    controllerSettings.mDifferentials.push_back(rearWheelDrive);",
+            "",
+            "    if (antiRollBarEnabled) {",
+            "        vehicle.mAntiRollBars.clear();",
+            "        const frontRollBar = new Jolt.VehicleAntiRollBar();",
+            "        frontRollBar.mLeftWheel = FL_WHEEL;",
+            "        frontRollBar.mRightWheel = FR_WHEEL;",
+            "        const rearRollBar = new Jolt.VehicleAntiRollBar();",
+            "        rearRollBar.mLeftWheel = BL_WHEEL;",
+            "        rearRollBar.mRightWheel = BR_WHEEL;",
+            "        vehicle.mAntiRollBars.push_back(frontRollBar);",
+            "        vehicle.mAntiRollBars.push_back(rearRollBar);",
+            "    }",
+            "    //",
+            "    vehicle.mController = controllerSettings;",
+            "    const constraint = new Jolt.VehicleConstraint(carBody, vehicle);",
+            "    //int.ActivateBody(constraint.GetWheel(0).GetContactBodyID());",
+            "    //int.ActivateBody(constraint.GetWheel(1).GetContactBodyID());",
+            "    //int.ActivateBody(constraint.GetWheel(2).GetContactBodyID());",
+            "    //int.ActivateBody(constraint.GetWheel(3).GetContactBodyID());",
+            "    //console.log(constraint.GetWheel(0))",
+            "    pshd.physicsSystem.AddConstraint(constraint);",
+            "    //int.ActivateConstraint(constraint);",
+            "    o1.getVariables().add(\"VehicleConstraint4\");",
+            "    o1.getVariables().get(\"VehicleConstraint4\").castTo(\"array\");",
+            "    o1.getVariables().get(\"VehicleConstraint4\")._childrenArray.push(constraint);",
+            "    //constraint.GetWheelWorldTransform(0,constraint.Get.",
+            "    //o1.getVariables().get(\"constraints2\")._childrenArray.push(con);",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "Front left wheel number (min. 0; from the ones you added)",
+          "name": "FLW",
+          "type": "expression"
+        },
+        {
+          "description": "Rear left wheel number (min. 0; from the ones you added)",
+          "name": "BLW",
+          "type": "expression"
+        },
+        {
+          "description": "Front right wheel number (min. 0; from the ones you added)",
+          "name": "FRW",
+          "type": "expression"
+        },
+        {
+          "description": "Rear right wheel number (min. 0; from the ones you added)",
+          "name": "BRW",
+          "type": "expression"
+        },
+        {
+          "description": "Max engine torque",
+          "name": "MET",
+          "type": "expression"
+        },
+        {
+          "description": "Clutch strength",
+          "name": "CLS",
+          "type": "expression"
+        },
+        {
+          "description": "Limited slip ratio (between left and right wheel)",
+          "name": "LSR",
+          "type": "expression"
+        },
+        {
+          "description": "Anti roll bar enabled",
+          "name": "ARBE",
+          "type": "trueorfalse"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Set actions that the 4-wheels vehicle should perform.",
+      "fullName": "Drive the vehicle",
+      "functionType": "Action",
+      "name": "Drive",
+      "private": true,
+      "sentence": "Set actions that _PARAM1_ should perform: forward: _PARAM3_, right: _PARAM4_, brake: _PARAM5_, hand brake: _PARAM6_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "const forward = eventsFunctionContext.getArgument(\"V\").valueOf();\r",
+            "const right = eventsFunctionContext.getArgument(\"R\").valueOf();\r",
+            "const brake = eventsFunctionContext.getArgument(\"B\").valueOf();\r",
+            "const handBrake = eventsFunctionContext.getArgument(\"HB\").valueOf();\r",
+            "const int = runtimeScene.physics3DSharedData.bodyInterface;\r",
+            "objects.forEach((ob) => {\r",
+            "    if (ob.getVariables().has(\"VehicleConstraint4\")) {\r",
+            "        let constraint = ob.getVariables().get(\"VehicleConstraint4\")._childrenArray[0];\r",
+            "        //console.log(constraint)\r",
+            "        let controller = Jolt.castObject(constraint.GetController(), Jolt.WheeledVehicleController);\r",
+            "        controller.SetDriverInput(forward, right, brake, handBrake);\r",
+            "        int.ActivateBody(constraint.GetVehicleBody().GetID());\r",
+            "        for (let i = 0; i < 4; i++) {\r",
+            "            int.ActivateBody(constraint.GetWheel(i).GetContactBodyID());\r",
+            "        }\r",
+            "    }\r",
+            "});"
+          ],
+          "parameterObjects": "V",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "Vehicle",
+          "name": "V",
+          "type": "objectList"
+        },
+        {
+          "description": "Physics3D",
+          "name": "Beh",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "Forward (default: 0, 1 or -1)",
+          "name": "F",
+          "type": "expression"
+        },
+        {
+          "description": "Right rotating (default: 0, 1 or -1)",
+          "name": "R",
+          "type": "expression"
+        },
+        {
+          "description": "Brake (default: 0, 1 or -1)",
+          "name": "B",
+          "type": "expression"
+        },
+        {
+          "description": "Hand brake (default: 0, 1 or -1)",
+          "name": "HB",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Synchronize 3D wheel with the wheel of vehicle",
+      "fullName": "Synchronize wheel",
+      "functionType": "Action",
+      "name": "SynchronizeWheel",
+      "private": true,
+      "sentence": "Synchronize _PARAM3_ with the wheel number _PARAM5_ of _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");\r",
+            "let ob2 = eventsFunctionContext.getObjects(\"Wh\");\r",
+            "const numb = eventsFunctionContext.getArgument(\"N\").valueOf();\r",
+            "ob1.forEach ( (veh) => {\r",
+            "    let constr = veh.getVariables().get(\"VehicleConstraint4\")._childrenArray[0];\r",
+            "    ob2.forEach( (wheel)=>{\r",
+            "        let wh = wheel.get3DRendererObject();\r",
+            "        //wh.quaternion.copy\r",
+            "    });\r",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "Wheel",
+          "name": "Wh",
+          "type": "objectList"
+        },
+        {
+          "description": "3D capability",
+          "name": "Beh2",
+          "supplementaryInformation": "Scene3D::Base3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "Wheel number",
+          "name": "N",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Remove the constraint between two 3D objects.",
+      "fullName": "Remove constraint",
+      "functionType": "Action",
+      "name": "Remove",
+      "sentence": "Remove the constraint between _PARAM1_ and _PARAM3_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "let ob1 = eventsFunctionContext.getObjects(\"O1\");",
+            "let ob2 = eventsFunctionContext.getObjects(\"O2\");",
+            "let x1 = 0.01 * eventsFunctionContext.getArgument(\"X1\");",
+            "let y1 = 0.01 * eventsFunctionContext.getArgument(\"Y1\");",
+            "let z1 = 0.01 * eventsFunctionContext.getArgument(\"Z1\");",
+            "let x2 = 0.01 * eventsFunctionContext.getArgument(\"X2\");",
+            "let y2 = 0.01 * eventsFunctionContext.getArgument(\"Y2\");",
+            "let z2 = 0.01 * eventsFunctionContext.getArgument(\"Z2\");",
+            "",
+            "",
+            "let constrArr = [];",
+            "let pshd = runtimeScene.physics3DSharedData;",
+            "let int = pshd.physicsSystem.GetBodyInterface();",
+            "",
+            "",
+            "ob1.forEach((o1) => {",
+            "    ob2.forEach((o2) => {",
+            "        if (o2.getVariables().has(\"constraints\") && o1.getVariables().has(\"constraints\") && o2.getVariables().has(\"constraints2\") && o1.getVariables().has(\"constraints2\") && o1 != o2) {",
+            "            let constr = o1.getVariables().get(\"constraints\");",
+            "            let constr2 = o2.getVariables().get(\"constraints\");",
+            "            let b = true;",
+            "            for (let i = 0; i < constr._childrenArray.length; i++) {",
+            "                if (constr._childrenArray[i] == o2) {",
+            "                    let constr11 = o1.getVariables().get(\"constraints2\");",
+            "                    let constr22 = o2.getVariables().get(\"constraints2\");",
+            "                    for (let j = 0; j < constr11._childrenArray.length; j++) {",
+            "                        for (let l = 0; l < constr22._childrenArray.length; l++) {",
+            "                            if (constr11._childrenArray[j] == constr22._childrenArray[l]) {",
+            "                                pshd.physicsSystem.RemoveConstraint(constr11._childrenArray[j]);",
+            "                                constr11._childrenArray.splice(j, 1);",
+            "                                constr22._childrenArray.splice(l, 1);",
+            "                                constr._childrenArray.splice(i,1);",
+            "                                for (let p = 0; p < constr2._childrenArray.length;p++){",
+            "                                    if (constr2._childrenArray[p] == o1){",
+            "                                        constr2._childrenArray.splice(p,1);",
+            "                                    }",
+            "                                }",
+            "                            }",
+            "                        }",
+            "                    }",
+            "                }",
+            "            }",
+            "        }",
+            "    });",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [
+        {
+          "description": "3D object 1",
+          "name": "O1",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh1",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        },
+        {
+          "description": "3D object 2",
+          "name": "O2",
+          "type": "objectList"
+        },
+        {
+          "description": "3D physics",
+          "name": "Beh2",
+          "supplementaryInformation": "Physics3D::Physics3DBehavior",
+          "type": "behavior"
+        }
+      ],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}
